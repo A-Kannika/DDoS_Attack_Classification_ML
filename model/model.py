@@ -23,3 +23,12 @@ from sklearn.metrics import roc_curve, auc
 from sklearn.preprocessing import label_binarize
 from itertools import cycle
 
+def read_data():
+    df = pd.read_csv("../data/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv")
+    print(df.head())
+
+def main():
+    read_data()
+
+if __name__ == "__main__":
+    main()
