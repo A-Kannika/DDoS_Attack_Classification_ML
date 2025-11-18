@@ -26,7 +26,9 @@ from itertools import cycle
 def read_data():
     df = pd.read_csv("../data/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv")
     print(df.head())
+    return df
 
+def preprocess_data(df):
     # prepare the data
     # 1. remove the space before the column names
     df.columns = df.columns.str.strip()
@@ -36,7 +38,8 @@ def read_data():
 
 
 def main():
-    read_data()
+    df = read_data()
+    preprocess_data(df)
 
 if __name__ == "__main__":
     main()
