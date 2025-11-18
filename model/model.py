@@ -30,7 +30,9 @@ def read_data():
     # prepare the data
     # 1. remove the space before the column names
     df.columns = df.columns.str.strip()
-    #
+    # 2. Check the unique values in the label target columns
+    print(df.loc[:, 'Label'].unique())
+
 
 
 def main():
