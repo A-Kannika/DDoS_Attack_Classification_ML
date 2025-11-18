@@ -35,11 +35,26 @@ def preprocess_data(df):
     # 2. Check the unique values in the label target columns
     print(df.loc[:, 'Label'].unique())
 
+def checking_null(df):
+    # Count columns with nulls and without nulls
+    num_null = (df.isna().sum() > 0).sum()       # columns that have at least 1 null
+    num_not_null = df.shape[1] - num_null        # columns with no nulls
+
+    # Data for histogram
+    counts = [num_not_null, num_null]
+
+    plt.figure(figsize=(4,4))
+    plt.bar([0, 1], counts, color=['green', 'red'])
+    plt.xticks([0, 1], labels=['Not Null', 'Has Null'])
+    plt.ylabel('Number of Columns')
+    plt.title('Columns with Null Values')
+    plt.show()
 
 
 def main():
     df = read_data()
     preprocess_data(df)
+    checking_null(df)
 
 if __name__ == "__main__":
     main()
