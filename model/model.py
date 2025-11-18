@@ -27,6 +27,12 @@ def read_data():
     df = pd.read_csv("../data/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv")
     print(df.head())
 
+    # prepare the data
+    # 1. remove the space before the column names
+    df.columns = df.columns.str.strip()
+    #
+
+
 def main():
     read_data()
 
