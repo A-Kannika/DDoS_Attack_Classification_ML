@@ -24,8 +24,8 @@ from sklearn.preprocessing import label_binarize
 from itertools import cycle
 
 def read_data():
-    # df = pd.read_csv("../data/DDos.csv")
-    df = pd.read_csv("../data/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv")
+    df = pd.read_csv("../data/DDos.csv")
+    # df = pd.read_csv("../data/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv")
     # df = pd.read_csv("../data/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv")
     # df = pd.read_csv("../data/Friday-WorkingHours-Morning.pcap_ISCX.csv")
     # df = pd.read_csv("../data/Monday-WorkingHours.pcap_ISCX_part_1.csv")
@@ -68,7 +68,7 @@ def checking_null(df):
 
 def plotMissingValues(dataframe):
     missing_values = dataframe.isnull().sum()  # Counting null values for each column
-    fig = plt.figure(figsize=(16, 5))
+    fig = plt.figure(figsize=(16, 6))
     missing_values.plot(kind='bar')
     plt.xlabel("Features")
     plt.ylabel("Missing values")
@@ -78,8 +78,8 @@ def plotMissingValues(dataframe):
 def main():
     df = read_data()
     preprocess_data(df)
-    # checking_null(df)
-    # plotMissingValues(df)
+    checking_null(df)
+    plotMissingValues(df)
 
 if __name__ == "__main__":
     main()
