@@ -26,6 +26,20 @@ from itertools import cycle
 def read_data():
     df = pd.read_csv("../data/DDos.csv")
     # df = pd.read_csv("../data/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv")
+    # df = pd.read_csv("../data/Friday-WorkingHours-Afternoon-PortScan.pcap_ISCX.csv")
+    # df = pd.read_csv("../data/Friday-WorkingHours-Morning.pcap_ISCX.csv")
+    # df = pd.read_csv("../data/Monday-WorkingHours.pcap_ISCX_part_1.csv")
+    # df = pd.read_csv("../data/Monday-WorkingHours.pcap_ISCX_part_2.csv")
+    # df = pd.read_csv("../data/Monday-WorkingHours.pcap_ISCX_part_3.csv")
+    # df = pd.read_csv("../data/Thursday-WorkingHours-Afternoon-Infilteration.pcap_ISCX.csv")
+    # df = pd.read_csv("../data/Thursday-WorkingHours-Morning-WebAttacks.pcap_ISCX.csv")
+    # df = pd.read_csv("../data/Tuesday-WorkingHours.pcap_ISCX_part_1.csv")
+    # df = pd.read_csv("../data/Tuesday-WorkingHours.pcap_ISCX_part_2.csv")
+    # df = pd.read_csv("../data/Tuesday-WorkingHours.pcap_ISCX_part_3.csv")
+    # df = pd.read_csv("../data/Wednesday-workingHours.pcap_ISCX_part_1.csv")
+    # df = pd.read_csv("../data/Wednesday-workingHours.pcap_ISCX_part_2.csv")
+    # df = pd.read_csv("../data/Wednesday-workingHours.pcap_ISCX_part_3.csv")
+    
     print(df.head())
     return df
 
