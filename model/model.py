@@ -55,10 +55,8 @@ def checking_null(df):
     # Count columns with nulls and without nulls
     num_null = (df.isna().sum() > 0).sum()       # columns that have at least 1 null
     num_not_null = df.shape[1] - num_null        # columns with no nulls
-
     # Data for histogram
     counts = [num_not_null, num_null]
-
     plt.figure(figsize=(4,4))
     plt.bar([0, 1], counts, color=['green', 'red'])
     plt.xticks([0, 1], labels=['Not Null', 'Has Null'])
@@ -75,11 +73,17 @@ def plotMissingValues(dataframe):
     plt.title("Total number of Missing values in each feature")
     plt.show()
 
+def remove_null(df):
+    data_f = df.dropna()
+    #  plotMissingValues(data_f) # you should not see any null data in the graph
+    return data_f
+
 def main():
     df = read_data()
-    preprocess_data(df)
-    checking_null(df)
-    plotMissingValues(df)
+    # preprocess_data(df)
+    # checking_null(df)
+    # plotMissingValues(df)
+    df = remove_null(df)
 
 if __name__ == "__main__":
     main()
