@@ -25,6 +25,7 @@ from itertools import cycle
 
 def read_data():
     df = pd.read_csv("../data/DDos.csv")
+    # df = pd.read_csv("../data/Friday-WorkingHours-Afternoon-DDos.pcap_ISCX.csv")
     print(df.head())
     return df
 
