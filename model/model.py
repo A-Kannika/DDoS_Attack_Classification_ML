@@ -57,7 +57,7 @@ def checking_null(df):
     num_not_null = df.shape[1] - num_null        # columns with no nulls
     # Data for histogram
     counts = [num_not_null, num_null]
-    plt.figure(figsize=(4,4))
+    plt.figure(figsize=(10,5))
     plt.bar([0, 1], counts, color=['green', 'red'])
     plt.xticks([0, 1], labels=['Not Null', 'Has Null'])
     plt.ylabel('Number of Columns')
@@ -78,12 +78,29 @@ def remove_null(df):
     #  plotMissingValues(data_f) # you should not see any null data in the graph
     return data_f
 
+def change_datatype(df):
+    # map the data to numerical data
+    df['Label'] = df['Label'].map({'BENIGN': 0, 'DDoS': 1})
+
+    counts = df['Label'].value_counts().sort_index()
+
+    plt.figure(figsize=(10,5))
+    plt.bar(counts.index, counts.values, color=['green', 'red'])
+    plt.xticks([0, 1], labels=['BENIGN', 'DDoS'])
+    plt.xlabel('Class')
+    plt.ylabel('Count')
+    plt.title('Label Distribution')
+    plt.show()
+    return df
+
 def main():
     df = read_data()
-    # preprocess_data(df)
-    # checking_null(df)
-    # plotMissingValues(df)
+    preprocess_data(df)
+    checking_null(df)
+    plotMissingValues(df)
     df = remove_null(df)
+    change_datatype(df)
+    
 
 if __name__ == "__main__":
     main()
