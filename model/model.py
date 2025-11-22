@@ -93,6 +93,13 @@ def change_datatype(df):
     plt.show()
     return df
 
+def hist_for_each_feature(df):
+    plt.figure(5)
+    for col in df.columns:
+        plt.hist(df[col])
+        plt.title(col)
+        plt.show()
+
 def main():
     df = read_data()
     preprocess_data(df)
@@ -101,6 +108,7 @@ def main():
     df = remove_null(df)
     df = change_datatype(df)
     print(df.describe())
+    hist_for_each_feature(df)
     
 
 if __name__ == "__main__":
