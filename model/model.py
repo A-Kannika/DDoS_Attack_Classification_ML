@@ -99,7 +99,8 @@ def main():
     checking_null(df)
     plotMissingValues(df)
     df = remove_null(df)
-    change_datatype(df)
+    df = change_datatype(df)
+    print(df.describe())
     
 
 if __name__ == "__main__":
