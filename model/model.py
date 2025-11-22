@@ -100,6 +100,18 @@ def hist_for_each_feature(df):
         plt.title(col)
         plt.show()
 
+def data_splitting(df):
+    #  split data into features and target variable
+    X = df.drop('Label', axis=1)
+    y = df['Label']
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=42)
+    print("The train dataset size = ",X_train.shape)
+    print("The test dataset size = ",X_test.shape)
+    return df
+
+
 def main():
     df = read_data()
     preprocess_data(df)
@@ -107,8 +119,9 @@ def main():
     plotMissingValues(df)
     df = remove_null(df)
     df = change_datatype(df)
-    print(df.describe())
-    hist_for_each_feature(df)
+    # print(df.describe())
+    # hist_for_each_feature(df)
+    df = data_splitting(df)
     
 
 if __name__ == "__main__":
