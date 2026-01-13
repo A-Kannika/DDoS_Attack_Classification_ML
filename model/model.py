@@ -135,14 +135,21 @@ def random_forest_model(X_train, X_test, y_train, y_test):
 
     # tree_plot(rf_model)
 
-    return rf_pred
+    return rf_model, rf_pred
 
 def logistic_regression_model(X_train, X_test, y_train, y_test):
     lr_model = LogisticRegression(random_state=42)
     lr_model.fit(X_train, y_train)
     lr_pred = lr_model.predict(X_test)
     
-    return lr_pred
+    return lr_model, lr_pred
+
+def neural_network_model(X_train, X_test, y_train, y_test):
+    nn_model = MLPClassifier(hidden_layer_sizes=(10,), max_iter=10, random_state=42)
+    nn_model.fit(X_train, y_train)
+    nn_pred = nn_model.predict(X_test)
+
+    return nn_model, nn_pred
 
 def tree_plot(rf_model):
     estimator = rf_model.estimators_[0]  # Selecting the first estimator from the random forest model
@@ -187,6 +194,57 @@ def logistic_regression_model_evaluation(y_test, y_pred):
     print(f'Recall: {lr_recall:.4f}')
     plot_confusion_matrix(y_test, y_pred, ['Benign', 'DDoS'], 'Logistic Regression Confusion Matrix')
 
+def neural_network_model_evaluation(y_test, y_pred):
+    nn_accuracy = accuracy_score(y_test, y_pred)
+    nn_f1 = f1_score(y_test, y_pred)
+    nn_precision = precision_score(y_test, y_pred)
+    nn_recall = recall_score(y_test, y_pred)
+
+    print('\nNeural Network Metrics:')
+    print(f'Accuracy: {nn_accuracy:.4f}')
+    print(f'F1 Score: {nn_f1:.4f}')
+    print(f'Precision: {nn_precision:.4f}')
+    print(f'Recall: {nn_recall:.4f}')
+    plot_confusion_matrix(y_test, y_pred, ['Benign', 'DDoS'], 'Logistic Regression Confusion Matrix')
+
+def model_comparison(X_test, y_test, rf_model, lr_model, nn_model):
+    # Random Forest
+    rf_proba = rf_model.predict_proba(X_test)
+
+    # Logistic Regression
+    lr_proba = lr_model.predict_proba(X_test)
+
+    # Neural Network
+    nn_proba = nn_model.predict_proba(X_test)
+
+    # Combine predictions for ROC curve
+    # Calculate ROC curve for Random Forest
+    rf_fpr, rf_tpr, _ = roc_curve(y_test, rf_proba[:, 1])
+    rf_auc = auc(rf_fpr, rf_tpr)
+
+    # Calculate ROC curve for Logistic Regression
+    lr_fpr, lr_tpr, _ = roc_curve(y_test, lr_proba[:, 1])
+    lr_auc = auc(lr_fpr, lr_tpr)
+
+    # Calculate ROC curve for Neural Network
+    nn_fpr, nn_tpr, _ = roc_curve(y_test, nn_proba[:, 1])
+    nn_auc = auc(nn_fpr, nn_tpr)
+
+    # Plot ROC curves for all models
+    plt.figure(figsize=(8, 6))
+    plt.plot(rf_fpr, rf_tpr, label=f'Random Forest (AUC = {rf_auc:.2f})')
+    plt.plot(lr_fpr, lr_tpr, label=f'Logistic Regression (AUC = {lr_auc:.2f})')
+    plt.plot(nn_fpr, nn_tpr, label=f'Neural Network (AUC = {nn_auc:.2f})')
+
+    # Plot ROC curve for random classifier (50% area)
+    plt.plot([0, 1], [0, 1], linestyle='--', color='black', label='Random Classifier (AUC = 0.50)')
+
+    plt.xlabel('False Positive Rate')
+    plt.ylabel('True Positive Rate')
+    plt.title('Receiver Operating Characteristic (ROC) Curve')
+    plt.legend()
+    plt.grid()
+    plt.show()
 
 
 def main():
@@ -200,11 +258,18 @@ def main():
     # hist_for_each_feature(df)
     X_train, X_test, y_train, y_test = data_splitting(df)
 
-    rf_pred = random_forest_model(X_train, X_test, y_train, y_test)
+    rf_model, rf_pred = random_forest_model(X_train, X_test, y_train, y_test)
     random_forest_model_evaluation(y_test, rf_pred)
 
-    lr_pred = logistic_regression_model(X_train, X_test, y_train, y_test)
+    lr_model, lr_pred = logistic_regression_model(X_train, X_test, y_train, y_test)
     logistic_regression_model_evaluation(y_test, lr_pred)
+
+    nn_model, nn_pred = neural_network_model(X_train, X_test, y_train, y_test)
+    neural_network_model_evaluation(y_test, nn_pred)
+
+    model_comparison(X_test, y_test, rf_model, lr_model, nn_model)
+
+
 
     
 
